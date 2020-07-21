@@ -157,7 +157,7 @@ $(document).ready(function() {
     Countdown
     --------------------------*/
     $('#countdown').countdown({
-        date: '10/01/2019 23:59:59',
+        date: '01/25/2020 23:59:59',
         day: 'Day',
         days: 'Days'
     });
