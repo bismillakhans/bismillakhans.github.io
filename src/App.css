@@ -1,0 +1,101 @@
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+
+/* Container styles */
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border: 2px solid #333;
+  border-radius: 15px;
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+/* Input group styles */
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-field {
+  flex-grow: 1;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #90EE90;
+  border-radius: 8px;
+  background-color: #E8FFE8;
+}
+
+.add-button {
+  padding: 10px 25px;
+  font-size: 16px;
+  background-color: #FF6B6B;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-button:hover {
+  background-color: #FF5252;
+}
+
+/* Item styles */
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFF8DC;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border: 2px solid #FFD700;
+  border-radius: 8px;
+}
+
+.item-text {
+  flex-grow: 1;
+  font-size: 16px;
+  color: #333;
+}
+
+.item-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.delete-button {
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #FF6B6B;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.update-button {
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #4CAF50;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  color: #FF5252;
+}
+
+.update-button:hover {
+  color: #45a049;
+}
