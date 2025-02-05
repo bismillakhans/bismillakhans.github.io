@@ -97,5 +97,5 @@ body {
 }
 
 .update-button:hover {
-  color: #45a049;
+  color: hsl(120, 100%, 25%);
 }
