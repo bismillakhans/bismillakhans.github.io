@@ -1,8 +1,17 @@
 export default function TodoListAddItem({ value, handleInputChange, addTask }) {
+  const isValidInput = (input) => {
+    const alphanumericRegex = /^[a-z0-9]+$/i;
+    return alphanumericRegex.test(input) && input.length < 50;
+  };
+
   return (
     <form className="input-group" onSubmit={(e) => {
       e.preventDefault();
-      addTask();
+      if (isValidInput(value)) {
+        addTask();
+      } else {
+        alert("Input must be alphanumeric and less than 50 characters.");
+      }
     }}>
       <input 
         type="text" 

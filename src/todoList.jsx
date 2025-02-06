@@ -1,12 +1,11 @@
+import { use } from "react";
 import TodoListAddItem from "./todoListAddItem";
 import TodoListItem from "./todoListItem";
 import TodoListUpdateItem from "./todoListUpdateItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export default function TodoList() {
-  const [tasks, setTasks] = useState([
-    { id: 1, title: "task1" },
-    { id: 2, title: "task2" },
-  ]);
+  const apiURL = "https://bismillakhans.pythonanywhere.com/";
+  const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(null);
@@ -14,31 +13,77 @@ export default function TodoList() {
     if (!newTask) {
       return;
     }
-    setTasks([...tasks, { id: tasks.length + 1, title: newTask }]);
-    setNewTask("");
+    fetch(apiURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title: newTask }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setTasks([...tasks, { id: data.id, title: newTask }]);
+        setNewTask("");
+      })
+      .catch((error) => {
+        console.error("Error adding task:", error);
+      });
+  }
+  function getTask() {
+    fetch(apiURL)
+      .then((response) => response.json())
+      .then((data) => {
+        setTasks(data);
+      });
   }
 
-
-
+  useEffect(() => {
+    getTask();
+  }, []);
 
   function handleInputChange(event) {
     setNewTask(event.target.value);
   }
   function deleteTask(index) {
-    setTasks(tasks.filter((_, i) => i !== index));
+    fetch(apiURL + index+"/", {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // setTasks(tasks.filter((_, i) => i !== index));
+
+        getTask();
+      });
   }
   function updateTask(index) {
     setIsUpdate(true);
-    setNewTask(tasks[index].title);
-    setCurrentTaskIndex(index);
+    // get the task to update
+    fetch(apiURL + index + "/")
+      .then((response) => response.json())
+      .then((data) => {
+        setNewTask(data.title);
+        setCurrentTaskIndex(index);
+      });
   }
 
   function updateSaveTask() {
     setIsUpdate(false);
-    const newTasks = [...tasks];
-    newTasks[currentTaskIndex].title = newTask;
-    setTasks(newTasks);
-    setNewTask("");
+    // const newTasks = [...tasks];
+    // newTasks[currentTaskIndex].title = newTask;
+    // setTasks(newTasks);
+    // setNewTask("");
+    fetch(apiURL + currentTaskIndex + "/", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title: newTask }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        getTask();
+        setNewTask("");
+      });
   }
   return (
     <>
@@ -61,8 +106,8 @@ export default function TodoList() {
           <TodoListItem
             key={task.id}
             task={task.title}
-            deleteTask={() => deleteTask(index)}
-            updateTask={() => updateTask(index)}
+            deleteTask={() => deleteTask(task.id)}
+            updateTask={() => updateTask(task.id)}
             taskId={index}
           />
         ))}
